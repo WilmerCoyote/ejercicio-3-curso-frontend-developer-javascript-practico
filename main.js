@@ -6,11 +6,14 @@ const iconCart = document.querySelector('.navbar-shopping-cart');
 const myOrderMenu = document.querySelector('.product-detail');
 const myOrderBackIcon = document.querySelector('.title-container img');
 const cardsContainer = document.querySelector('.cards-container');
+const productDescription = document.querySelector('.product-description');
+const productDescriptionClose = document.querySelector('.product-description-close');
 
 emailMenu.addEventListener('click', toggleDesktopMenu);
 iconMobileMenu.addEventListener('click', toggleMobileMenu);
 iconCart.addEventListener('click', toggleMyOrderMenu);
 myOrderBackIcon.addEventListener('click', closeMyOrderMenu);
+productDescriptionClose.addEventListener('click', closeProductDescription)
 
 const productList = [];
 productList.push({
@@ -37,9 +40,13 @@ function toggleDesktopMenu () {
 
 function toggleMobileMenu () {
     const isMyOrderMenuClosed = myOrderMenu.classList.contains('inactive');
-
+    const isProductDescriptionClosed = productDescription.classList.contains('inactive');
+    
     if (!isMyOrderMenuClosed) {
         myOrderMenu.classList.add('inactive');
+    }
+    if (!isProductDescriptionClosed) {
+        productDescription.classList.add('inactive');
     }
 
     mobileMenu.classList.toggle('inactive');
@@ -48,12 +55,16 @@ function toggleMobileMenu () {
 function toggleMyOrderMenu () {
     const isMobileMenuClosed = mobileMenu.classList.contains('inactive');
     const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
+    const isProductDescriptionClosed = productDescription.classList.contains('inactive');
     
     if (!isMobileMenuClosed) {
         mobileMenu.classList.add('inactive');
     }
     if (!isDesktopMenuClosed) {
         desktopMenu.classList.add('inactive');
+    }
+    if (!isProductDescriptionClosed) {
+        productDescription.classList.add('inactive');
     }
 
     myOrderMenu.classList.toggle('inactive');
@@ -92,6 +103,7 @@ function renderProducts (productArray) {
 
         const imgProduct = document.createElement('img');
         imgProduct.setAttribute('src', product.image);
+        imgProduct.addEventListener('click', openProductDescription)
         // setAtribute se utiliza para agregar cualquier atributo existente a un elemento de HTML.
         
         const productInfo = document.createElement('div');
@@ -123,4 +135,28 @@ function renderProducts (productArray) {
 
         cardsContainer.appendChild(productCard);
     }
+}
+
+function openProductDescription () {
+    const isMyOrderMenuClosed = myOrderMenu.classList.contains('inactive');
+    const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
+
+    if (!isDesktopMenuClosed) {
+        desktopMenu.classList.add('inactive');
+    }
+    if (!isMyOrderMenuClosed) {
+        myOrderMenu.classList.add('inactive');
+    }
+    
+    productDescription.classList.remove('inactive');
+}
+
+function closeProductDescription () {
+    const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
+
+    if (!isDesktopMenuClosed) {
+        desktopMenu.classList.add('inactive');
+    }
+
+    productDescription.classList.add('inactive');
 }
